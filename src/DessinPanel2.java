@@ -174,9 +174,9 @@ public class DessinPanel2 extends JPanel {
 		public void mousePressed(MouseEvent event) {
 
 			Point p = event.getPoint();
+			courant = find(p);
 
 			if (!(etat instanceof ToutSelection)) {
-				courant = find(p);
 				etat = new UneSelection(courant);
 			}
 
