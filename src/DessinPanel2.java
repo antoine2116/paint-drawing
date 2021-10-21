@@ -32,7 +32,6 @@ public class DessinPanel2 extends JPanel implements IPanel {
 	private Point2D lastPointPress;
 	private FormGeo lastFormGeo = null;
 	private String lastFichier = ".";
-	private int Toutselec;
 	private Color couleur;
 	private int TAILLECARREE = 30;
 	private FormGeo.Type typeDeForme = FormGeo.Type.RECT;
@@ -89,7 +88,6 @@ public class DessinPanel2 extends JPanel implements IPanel {
 	}
 
 	public void selectTout() {
-		Toutselec = 1;
 		etat = new ToutSelection();
 
 		selectedFormesGeo.clear();
@@ -187,7 +185,6 @@ public class DessinPanel2 extends JPanel implements IPanel {
 
 		// LORS DE CLIQUE DE LA SOURIS
 		public void mouseClicked(MouseEvent event) {
-			Toutselec = 0;
 			Point p = event.getPoint();
 			double x = p.getX();
 			double y = p.getY();
@@ -255,7 +252,7 @@ public class DessinPanel2 extends JPanel implements IPanel {
 
 					for (FormGeo f : selectedFormesGeo) {
 						f.moveBy(dx, dy);
-						if (Toutselec != 1) {
+						if (etat instanceof AucuneSelection) {
 							// Pour arreter la selection de plusieur fichier
 							// et le deplacer en meme temp
 							// en cas ou on clique appui pas la touche
@@ -280,7 +277,6 @@ public class DessinPanel2 extends JPanel implements IPanel {
 					 *                modification n'est pas autorisée.
 					 */
 				} catch (ConcurrentModificationException e) {
-					Toutselec = 0;
 				}
 				lastPointPress = p;
 			}
