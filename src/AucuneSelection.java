@@ -8,7 +8,7 @@ public class AucuneSelection implements EtatSelection {
     }
 
     @Override
-    public void dessiner(DessinPanel2 d, Graphics2D g2, ArrayList<FormGeo> selectedFormesGeo) {
+    public void dessiner(IPanel panel, Graphics2D g2, ArrayList<FormGeo> selectedFormesGeo) {
 
     }
 }

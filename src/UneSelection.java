@@ -9,10 +9,10 @@ public class UneSelection implements EtatSelection {
     }
 
     @Override
-    public void dessiner(DessinPanel2 d, Graphics2D g2, ArrayList<FormGeo> selectedFormesGeo) {
+    public void dessiner(IPanel panel, Graphics2D g2, ArrayList<FormGeo> selectedFormesGeo) {
         if (courant != null) {
-            d.lightSquares(g2, courant);
-            d.repaint();
+            panel.lightSquares(g2, courant);
+            panel.repaint();
         }
     }
 }

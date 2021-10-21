@@ -24,7 +24,7 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-public class DessinPanel2 extends JPanel {
+public class DessinPanel2 extends JPanel implements IPanel {
 
 	private ArrayList<FormGeo> formesGeo;
 	private ArrayList<FormGeo> selectedFormesGeo;
