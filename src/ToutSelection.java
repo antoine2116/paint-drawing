@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+    Classe instanciée lorsqu'on sélectionne toutes les formes
+ */
+
 public class ToutSelection implements EtatSelection {
 
     @Override

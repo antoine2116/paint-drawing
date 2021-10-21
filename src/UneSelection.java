@@ -1,6 +1,10 @@
 import java.awt.*;
 import java.util.ArrayList;
 
+/*
+    Classe instanciée lorsqu'on sélectionne une seule forme
+ */
+
 public class UneSelection implements EtatSelection {
     public FormGeo courant;
 
