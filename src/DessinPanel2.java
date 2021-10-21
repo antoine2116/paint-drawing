@@ -24,23 +24,6 @@ import java.util.ConcurrentModificationException;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-/**
- * @param DessinPanel2
- *            tableau contenant les coordonner de dessin a selectionner
- * @param formesGeo
- *            Tableau contenant les formes geometriques
- * @param courant
- *            lorsqu'un figure est selectionner
- * @param lastPointPress
- *            le point precedent
- * @param Toutselec
- *            une facon pour faire la verification en cas ou on a selectionner
- *            ou nom voir mouseDragged
- * @param Toutselec
- *            sert a montre si tout est selectionner une methode cree pour
- *            verifier
- * 
- */
 public class DessinPanel2 extends JPanel {
 
 	private ArrayList<FormGeo> formesGeo;
@@ -56,7 +39,10 @@ public class DessinPanel2 extends JPanel {
 	private Object object;
 	private int touche;
 
+	private EtatSelection etat;
+
 	public DessinPanel2() {
+		etat = new AucuneSelection();
 		formesGeo = new ArrayList<FormGeo>();
 		selectedFormesGeo = new ArrayList<FormGeo>();
 		courant = null;
@@ -75,7 +61,6 @@ public class DessinPanel2 extends JPanel {
 
 	// EFFACE TOUT
 	public void clearAll() {
-
 		clearSelected();
 		formesGeo.clear();
 		paintComponent(getGraphics());
@@ -83,6 +68,7 @@ public class DessinPanel2 extends JPanel {
 
 	// EFFACE LA FIGURE SELECTIONNER
 	public void clearSelected() {
+		etat = new AucuneSelection();
 
 		for (FormGeo f : selectedFormesGeo) {
 			f.setSelected(false);
@@ -104,6 +90,8 @@ public class DessinPanel2 extends JPanel {
 
 	public void selectTout() {
 		Toutselec = 1;
+		etat = new ToutSelection();
+
 		selectedFormesGeo.clear();
 		selectedFormesGeo.addAll(formesGeo);
 		for (FormGeo f : selectedFormesGeo) {
@@ -144,17 +132,7 @@ public class DessinPanel2 extends JPanel {
 		Graphics2D g2 = (Graphics2D) g;
 		for (FormGeo f : formesGeo) {
 			f.dessine(g2);
-			if (courant != null) {
-				lightSquares(g2, courant);
-				repaint();
-			}
-			if (Toutselec == 1) {// TOUTSELEC EST UTILISER POUR
-				for (FormGeo selec : selectedFormesGeo) {
-					lightSquares(g2, selec);
-					repaint();
-				}
-			}
-
+			etat.dessiner(this, g2, selectedFormesGeo);
 		}
 	}
 
@@ -196,7 +174,12 @@ public class DessinPanel2 extends JPanel {
 		public void mousePressed(MouseEvent event) {
 
 			Point p = event.getPoint();
-			courant = find(p);
+
+			if (!(etat instanceof ToutSelection)) {
+				courant = find(p);
+				etat = new UneSelection(courant);
+			}
+
 			lastPointPress = p;
 			lastFormGeo = null;
 
@@ -264,7 +247,6 @@ public class DessinPanel2 extends JPanel {
 
 				if (!selectedFormesGeo.contains(courant)) {
 					courant.moveBy(dx, dy);
-
 				}
 
 				// attrape l'erreur en cas ou deux object entre dans le tableau
